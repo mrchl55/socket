@@ -14,10 +14,10 @@ root.render(
   <>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />} />
-
-        <Route path="/task3/subpage" element={<Task3Subpage />} />
-        <Route path="/task3/counter" element={<Task3Counter />} />
+        <Route path="/" element={<App />}>
+          <Route path="/task3/subpage" element={<Task3Subpage />} />
+          <Route path="/task3/counter" element={<Task3Counter />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   </>
