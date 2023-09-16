@@ -1,8 +1,8 @@
 const express = require("express");
 const { createServer } = require("node:http");
-const { join } = require("node:path");
 const { Server } = require("socket.io");
 const cors = require("cors");
+const { parse } = require("node:path");
 const app = express();
 app.use(cors());
 const server = createServer(app);
@@ -12,50 +12,49 @@ const io = new Server(server, {
   }
 });
 const usersLoggedIn = [];
-var count = 0;
-// app.get("/task3/subpage", (req, res) => {
-// });
-io.on("connection", function (socket) {
-  console.log("regular page");
-  io.emit("users_count", count);
+const findUser = (id) => {
+  return usersLoggedIn.find((u) => u.id === id);
+};
+io.on("connection", (socket) => {
+  io.emit("users_count", usersLoggedIn?.length);
 });
-io.of("/task3/subpage").on("connection", function (socket) {
-  console.log("connected", count);
-  io.emit("users_count", count);
+io.of("/task3/subpage").on("connection", (socket) => {
+  io.emit("users_count", usersLoggedIn?.length);
+  console.log("init", usersLoggedIn);
   const userId = socket.handshake.query.userId;
   if (!userId) {
     return;
   }
 
-  const parsedId = userId;
+  socket.on("disconnect", () => {
+    const user = findUser(userId);
+    if (user) {
+      if (user.instances <= 1) {
+        // if users' open cards are equal to 1, remove user from array
+        const idToDelete = usersLoggedIn.findIndex((u) => u.id === user.id);
+        usersLoggedIn.splice(idToDelete, 1);
+        socket.broadcast.emit("users_count", usersLoggedIn?.length);
+        console.log("removing", usersLoggedIn);
+        return;
+      }
+      console.log("removing instance", usersLoggedIn);
 
-  socket.on("disconnect", function () {
-    console.log("disconnected");
-    if (usersLoggedIn.includes(parsedId)) {
-      usersLoggedIn.pop(parsedId);
-      count--;
-      socket.broadcast.emit("users_count", count);
-      return;
+      user.instances--; // else if open cards count is greater than 1, only substract instances count
     }
   });
-  if (usersLoggedIn.includes(parsedId)) {
-    socket.broadcast.emit("users_count", count);
+  const user = findUser(userId);
+  if (user) {
+    user.instances++;
     return;
   }
-  console.log("past");
-  usersLoggedIn.push(parsedId);
-  count++;
-  socket.broadcast.emit("users_count", count);
-  console.log(count);
+  usersLoggedIn.push({
+    id: userId,
+    instances: 1 // to track single users' open cards
+  });
+  console.log("added", usersLoggedIn);
+
+  socket.broadcast.emit("users_count", usersLoggedIn?.length);
 });
-// io.on("connection", function (socket) {
-//   console.log("connected counter");
-//   io.emit("users_count", count);
-// });
-// io.of("/task3/counter").on("connect", function (socket) {
-//   console.log("create");
-//   socket.emit("users_count", count);
-// });
 server.listen(3001, () => {
   console.log("server running at http://localhost:3001");
 });

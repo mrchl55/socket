@@ -1,20 +1,13 @@
-import React from "react";
-import { io, Socket } from "socket.io-client";
+import { io } from "socket.io-client";
 import { useEffect } from "react";
-import {
-  ServerToClientEvents,
-  ClientToServerEvents
-} from "../../../types/socket";
 import { v4 as uuidv4 } from "uuid";
-
-// const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io();
 
 const Task3Subpage = () => {
   let userId = localStorage.getItem("userId");
   if (!userId) {
     const uuid = uuidv4();
     userId = JSON.stringify(uuid);
-    localStorage.setItem("userId", JSON.stringify(uuid));
+    localStorage.setItem("userId", JSON.stringify(uuid)); // to prevent doubled records from same origin - ideally  by ip but for testing purposes i used local storage
   }
 
   useEffect(() => {

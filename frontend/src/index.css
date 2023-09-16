@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #282c34;
+  background-color: #202531;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -13,9 +13,45 @@ body {
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  overflow: hidden;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+#root,
+.App {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+}
+
+header {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: #16181d;
+}
+header nav {
+  display: flex;
+
+  gap: 20px;
+}
+header a {
+  text-decoration: none;
+}
+
+header a:not(.active) {
+  color: white;
+}
+.main {
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

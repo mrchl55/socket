@@ -19,19 +19,8 @@ const Task3Counter = () => {
       setCount(data);
     });
   }, [socket, socket2]);
-  // const userEntered = () => {
-  //   socket.emit("user_entered", { message: "user logged" });
-  // };
-  // const userLeft = () => {
-  //   socket.emit("user_left", { message: "user left" });
-  // };
-  // useEffect(() => {
-  //   userEntered();
-  //   return () => {
-  //     userLeft();
-  //   };
-  // }, []);
-  return <div>index {count ? count : ""}</div>;
+
+  return <div>Number of users online: {count ?? 0}</div>;
 };
 
 export default Task3Counter;

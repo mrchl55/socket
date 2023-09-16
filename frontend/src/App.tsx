@@ -1,6 +1,3 @@
-import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
 import { NavLink, Outlet } from "react-router-dom";
 
 function App() {
@@ -12,7 +9,9 @@ function App() {
           <NavLink to="/task3/counter">Counter</NavLink>
         </nav>
       </header>
-      <Outlet />
+      <div className="main">
+        <Outlet />
+      </div>
     </div>
   );
 }
