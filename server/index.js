@@ -7,7 +7,8 @@ app.use(cors());
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000"
+    origin: "http://localhost:4000",
+    methods: ["GET", "POST"]
   }
 });
 const usersLoggedIn = [];
@@ -31,6 +32,7 @@ io.of("/task3/subpage").on("connection", (socket) => {
         // if users' open cards are equal to 1, remove user from array
         const idToDelete = usersLoggedIn.findIndex((u) => u.id === user.id);
         usersLoggedIn.splice(idToDelete, 1);
+
         socket.broadcast.emit("users_count", usersLoggedIn?.length);
         return;
       }
@@ -50,6 +52,6 @@ io.of("/task3/subpage").on("connection", (socket) => {
 
   socket.broadcast.emit("users_count", usersLoggedIn?.length);
 });
-server.listen(3001, () => {
-  console.log("server running at http://localhost:3001");
+server.listen(5000, () => {
+  console.log("server running at http://localhost:5000");
 });

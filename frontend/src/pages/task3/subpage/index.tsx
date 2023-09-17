@@ -11,12 +11,12 @@ const Task3Subpage = () => {
   }
 
   useEffect(() => {
-    const socket = io("http://localhost:3001/task3/subpage", {
+    const socket = io("http://localhost:5000/task3/subpage", {
       query: {
         userId: JSON.parse(userId!)
       }
     });
-    socket.connect();
+    // socket.connect();
     console.log("connecting");
     return () => {
       socket.disconnect(); //cleanup to make sure it forces disconnect for changing route with react-router
