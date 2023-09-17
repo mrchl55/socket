@@ -6,7 +6,7 @@ docker-compose up --build
 
 ## Or run servers separately
 
-# -------------------------- Server --------------------------
+## -------------------------- Server --------------------------
 
 ```sh
 
@@ -15,7 +15,7 @@ docker build --rm -t re-server-prod -f ./server/Dockerfile ./server
 docker run -it -p 5000:5000 re-server-prod
 ```
 
-# -------------------------- Client --------------------------
+## -------------------------- Client --------------------------
 
 ```sh
 
