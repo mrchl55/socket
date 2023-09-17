@@ -6,7 +6,7 @@ docker run -it -p 5000:5000 re-server-prod
 # -------------------------- frontend  -------------------------- #
 docker build --rm -t re-frontend-prod -f ./frontend/Dockerfile ./frontend
 
-docker run -it -p 4000:4000 re-frontend-prod
+docker run -it -p 3000:3000 re-frontend-prod
 
 # -------------------------- Docker compose  -------------------------- #
 
