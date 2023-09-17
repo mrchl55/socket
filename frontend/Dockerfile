@@ -1,7 +1,9 @@
 FROM node:18.16.1
-WORKDIR /frontend
-COPY package.json package-lock.json ./
+RUN mkdir -p /server && chown -R node:node /server
+WORKDIR /server
+COPY ./package.json .
+USER node
 RUN npm install
 COPY . .
-EXPOSE 3000
+EXPOSE 3001
 CMD npm start
