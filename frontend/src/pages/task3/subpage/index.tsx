@@ -16,6 +16,11 @@ const Task3Subpage = () => {
         userId: JSON.parse(userId!)
       }
     });
+    socket.connect();
+    console.log("connecting");
+    return () => {
+      socket.disconnect(); //cleanup to make sure it forces disconnect for changing route with react-router
+    };
   }, [userId]);
   return <div>Subpage</div>;
 };
